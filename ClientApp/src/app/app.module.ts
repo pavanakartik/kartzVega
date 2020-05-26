@@ -1,3 +1,4 @@
+import { ViewVehicleComponent } from './view-vehicle/view-vehicle';
 
 import { VehicleListComponent } from './vehicle-list/vehicle-list.component';
 import { AppErrorHandler } from './app.error-handler';
@@ -28,7 +29,7 @@ import { PaginationComponent } from './shared/pagination.component';
     NavMenuComponent,
     HomeComponent,
     CounterComponent,
-    FetchDataComponent, VehicleFormComponent, VehicleListComponent, PaginationComponent
+    FetchDataComponent, VehicleFormComponent, VehicleListComponent, PaginationComponent, ViewVehicleComponent
   ],
   imports: [
     BrowserModule.withServerTransition({ appId: 'ng-cli-universal' }),
@@ -38,7 +39,8 @@ import { PaginationComponent } from './shared/pagination.component';
     RouterModule.forRoot([
       { path: '', redirectTo: 'vehicles', pathMatch: 'full' },
       { path: 'vehicles/new', component: VehicleFormComponent },
-      { path: 'vehicles/:id', component: VehicleFormComponent },
+      { path: 'vehicles/edit/:id', component: VehicleFormComponent },
+      { path: 'vehicles/:id', component: ViewVehicleComponent },
       { path: 'vehicles', component: VehicleListComponent },
       { path: 'home', component: HomeComponent },
       { path: 'counter', component: CounterComponent },
