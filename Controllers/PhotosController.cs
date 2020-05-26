@@ -1,5 +1,6 @@
 using System;
 using System.IO;
+using System.Linq;
 using System.Threading.Tasks;
 using AutoMapper;
 using Microsoft.AspNetCore.Hosting;
@@ -21,6 +22,10 @@ namespace vega.Controllers
         private readonly IUnitOfWork unitOfWork;
         private readonly IMapper mapper;
 
+        private readonly int MAX_BYTES = 1 * 1024 * 1024;
+
+        private readonly string[] ACCEPTED_FILE_TYPES = new string[] { ".jpg", ".jpeg", ".png" };
+
         public PhotosController(IWebHostEnvironment host, IVehicleRepository repository, IUnitOfWork unitOfWork, IMapper mapper)
         {
             this.mapper = mapper;
@@ -37,6 +42,16 @@ namespace vega.Controllers
 
             if (vehicle == null)
                 return NotFound();
+
+            // check to see if fileinput is null or not
+
+            if (file == null) return BadRequest("File Not Found");
+            if (file.Length == 0) return BadRequest("EmptyFile");
+            if (file.Length > MAX_BYTES) return BadRequest("Maximum File Size Exceeded");
+            if (!ACCEPTED_FILE_TYPES.Any(s => s == Path.GetExtension(file.FileName))) return BadRequest("Invalid File Type");
+
+
+
 
             var uploadsFolderPath = Path.Combine(host.WebRootPath, "uploads");
             if (!Directory.Exists(uploadsFolderPath))
