@@ -8,6 +8,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using vega.Core;
+using vega.Core.Models;
 using vega.Persistence;
 
 namespace vega {
@@ -26,6 +27,8 @@ namespace vega {
             // interface implementation using Dependency injection-- Transient type(seperate instance of repository for every use)
             // or Singleton  a single instance of repository during Application LifecYCLE. 
             //Scoped- asingle instance of repository foreach request
+
+services.Configure<PhotoSettings>(Configuration.GetSection("PhotoSettings"));
 
              services.AddScoped<IVehicleRepository, VehicleRepository>();
 
