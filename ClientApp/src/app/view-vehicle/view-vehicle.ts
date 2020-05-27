@@ -26,7 +26,7 @@ export class ViewVehicleComponent implements OnInit {
   vehicleId: number;
   selectedFile: File = null;
   photos: any;
-  progress: number =0 ;
+  progress: number = 0;
 
   constructor(
 
@@ -84,9 +84,9 @@ export class ViewVehicleComponent implements OnInit {
 
         if (event.type === HttpEventType.UploadProgress) {
 
-          console.log('Upload progress: ' + Math.round((event.loaded / event.total) * 100) + "%");
 
-         this.zone.run(() => { 
+
+          this.zone.run(() => {
             this.progress = Math.round((event.loaded / event.total) * 100);
 
             console.log("My Photo Upload progress : " +
@@ -94,7 +94,8 @@ export class ViewVehicleComponent implements OnInit {
               this.progress);
 
 
-        }) 
+          })
+
 
         }
 
@@ -108,7 +109,19 @@ export class ViewVehicleComponent implements OnInit {
 
 
       },
-      null,
+      (err) => {
+        this.toasty.error({
+          title: 'Error',
+          msg: "Invalid File name",
+          theme: 'bootstrap',
+          showClose: true,
+          timeout: 5000
+
+
+        })
+      },
+
+
       () => { this.progress = null }
 
 

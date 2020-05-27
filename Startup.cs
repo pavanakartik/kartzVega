@@ -1,4 +1,5 @@
 using AutoMapper;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
@@ -21,8 +22,18 @@ namespace vega {
 
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices (IServiceCollection services) {
+
             services.AddControllers ()
                 .AddNewtonsoftJson ();
+
+            // 1. Add Authentication Services
+            services.AddAuthentication (options => {
+                options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+                options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+            }).AddJwtBearer (options => {
+                options.Authority = "https://kartzvega.auth0.com/";
+                options.Audience = "https://api.vega.com";
+            });
 
             // interface implementation using Dependency injection-- Transient type(seperate instance of repository for every use)
             // or Singleton  a single instance of repository during Application LifecYCLE. 
@@ -48,6 +59,7 @@ namespace vega {
 
         // This method gets called by the rucdntime. Use this method to configure the HTTP request pipeline.
         public void Configure (IApplicationBuilder app, IWebHostEnvironment env) {
+
             if (env.IsDevelopment ()) {
                 app.UseDeveloperExceptionPage ();
             } else {
@@ -63,6 +75,10 @@ namespace vega {
             }
 
             app.UseRouting ();
+
+            // 2. Enable authentication middleware
+            app.UseAuthentication ();
+            app.UseAuthorization ();
 
             app.UseEndpoints (endpoints => {
                 endpoints.MapControllerRoute (

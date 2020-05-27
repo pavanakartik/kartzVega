@@ -1,3 +1,5 @@
+import { ProfileComponent } from './profile/profile.component';
+import { NavBarComponent } from './nav-bar/nav-bar.component';
 import { PhotoService } from './services/photo.service';
 import { ViewVehicleComponent } from './view-vehicle/view-vehicle';
 
@@ -22,6 +24,7 @@ import { HomeComponent } from './home/home.component';
 import { CounterComponent } from './counter/counter.component';
 import { FetchDataComponent } from './fetch-data/fetch-data.component';
 import { PaginationComponent } from './shared/pagination.component';
+import { AuthService } from './services/auth.service';
 
 
 
@@ -31,7 +34,7 @@ import { PaginationComponent } from './shared/pagination.component';
     NavMenuComponent,
     HomeComponent,
     CounterComponent,
-    FetchDataComponent, VehicleFormComponent, VehicleListComponent, PaginationComponent, ViewVehicleComponent
+    FetchDataComponent, VehicleFormComponent, VehicleListComponent, PaginationComponent, ViewVehicleComponent, NavBarComponent, ProfileComponent
   ],
   imports: [
     BrowserModule.withServerTransition({ appId: 'ng-cli-universal' }),
@@ -39,7 +42,12 @@ import { PaginationComponent } from './shared/pagination.component';
     FormsModule, FileUploadModule,
     ToastyModule.forRoot(),
     RouterModule.forRoot([
+
       { path: '', redirectTo: 'vehicles', pathMatch: 'full' },
+      {
+        path: 'profile',
+        component: ProfileComponent
+      },
       { path: 'vehicles/new', component: VehicleFormComponent },
       { path: 'vehicles/edit/:id', component: VehicleFormComponent },
       { path: 'vehicles/:id', component: ViewVehicleComponent },
@@ -50,7 +58,7 @@ import { PaginationComponent } from './shared/pagination.component';
       { path: '**', redirectTo: 'home' }
     ])
   ],
-  providers: [VehicleService, PhotoService, { provide: ErrorHandler, useClass: AppErrorHandler}],
+  providers: [VehicleService, PhotoService, AuthService, { provide: ErrorHandler, useClass: AppErrorHandler }],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
