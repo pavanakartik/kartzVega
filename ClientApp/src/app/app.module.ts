@@ -1,3 +1,4 @@
+import { PhotoService } from './services/photo.service';
 import { ViewVehicleComponent } from './view-vehicle/view-vehicle';
 
 import { VehicleListComponent } from './vehicle-list/vehicle-list.component';
@@ -12,6 +13,7 @@ import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { RouterModule } from '@angular/router';
 
 import { ToastyModule } from 'ng2-toasty';
+import { FileUploadModule } from 'ng2-file-upload';
 
 
 import { AppComponent } from './app.component';
@@ -34,7 +36,7 @@ import { PaginationComponent } from './shared/pagination.component';
   imports: [
     BrowserModule.withServerTransition({ appId: 'ng-cli-universal' }),
     HttpClientModule,
-    FormsModule,
+    FormsModule, FileUploadModule,
     ToastyModule.forRoot(),
     RouterModule.forRoot([
       { path: '', redirectTo: 'vehicles', pathMatch: 'full' },
@@ -48,7 +50,7 @@ import { PaginationComponent } from './shared/pagination.component';
       { path: '**', redirectTo: 'home' }
     ])
   ],
-  providers: [VehicleService, { provide: ErrorHandler, useClass: AppErrorHandler }],
+  providers: [VehicleService, PhotoService, { provide: ErrorHandler, useClass: AppErrorHandler}],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

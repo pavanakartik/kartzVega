@@ -3,8 +3,12 @@
 
   <!-- Nav tabs -->
   <ul class="nav nav-tabs" role="tablist">
-    <li role="presentation" class="active"><a href="#basic" aria-controls="basic" role="tab" data-toggle="tab">Vehicle</a></li>
-    <li role="presentation"><a href="#photos" aria-controls="photos" role="tab" data-toggle="tab">Photos</a></li>
+    <li role="presentation" class="active" class="nav-item">
+      <a aria-controls="basic" role="tab" data-toggle="tab" class="nav-link active" href="#basic">Vehicle</a>
+    </li>
+    <li role="presentation" class="nav-item">
+      <a aria-controls="photos" role="tab" data-toggle="tab" class="nav-link active" href="#photos">Photos</a>
+    </li>
   </ul>
 
   <!-- Tab panes -->
@@ -27,7 +31,7 @@
         <li>Contact Phone: {{ vehicle.contact.phone }}</li>
         <li>Contact Email: {{ vehicle.contact.email }}</li>
       </ul>
-      <br/>
+      <br />
       <p>
         <a class="btn btn-primary" [routerLink]="['/vehicles/edit/', vehicle.id]">Edit</a>
         <button class="btn btn-danger" (click)="delete()">Delete</button>
@@ -35,10 +39,15 @@
       </p>
     </div>
     <!-- Photos tab -->
-    <div role="tabpanel" class="tab-pane" id="photos">
+    <div role="tabpanel" class="tab-pane active" id="photos">
       <h2>Photos</h2>
+      <p>Hey Buddy</p>
+
+      <input type="file" (change)="uploadPhoto($event)" #fileInput>
+
+
+
+
     </div>
   </div>
 </div>
-
-
