@@ -45,6 +45,12 @@
 
       <input type="file" (change)="uploadPhoto($event)" #fileInput>
 
+      <div class="progress" *ngIf="progress > 0">
+        <div class="progress-bar progress-bar-striped bg-success" role="progressbar" [style.width.%]="progress">
+        </div>
+      
+      </div> 
+
       <img *ngFor="let photo of photos" src="/uploads/{{photo.fileName}}" alt="" class="img-thumbnail">
 
 

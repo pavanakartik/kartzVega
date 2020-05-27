@@ -1,3 +1,4 @@
+import { NgZone } from '@angular/core';
 import { ToastyService } from 'ng2-toasty';
 
 import { Component, OnInit, ElementRef, ViewChild, ɵConsole } from '@angular/core';
@@ -25,8 +26,11 @@ export class ViewVehicleComponent implements OnInit {
   vehicleId: number;
   selectedFile: File = null;
   photos: any;
+  progress: number =0 ;
 
   constructor(
+
+    private zone: NgZone,
     private route: ActivatedRoute,
     private router: Router,
     private toasty: ToastyService,
@@ -82,7 +86,15 @@ export class ViewVehicleComponent implements OnInit {
 
           console.log('Upload progress: ' + Math.round((event.loaded / event.total) * 100) + "%");
 
+         this.zone.run(() => { 
+            this.progress = Math.round((event.loaded / event.total) * 100);
 
+            console.log("My Photo Upload progress : " +
+
+              this.progress);
+
+
+        }) 
 
         }
 
@@ -95,7 +107,10 @@ export class ViewVehicleComponent implements OnInit {
         }
 
 
-      }
+      },
+      null,
+      () => { this.progress = null }
+
 
 
 
