@@ -6,6 +6,7 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 })
 export class PhotoService {
 
+  photos: any;
   constructor(private http: HttpClient) { }
 
 
@@ -16,7 +17,13 @@ export class PhotoService {
     console.log(photo);
 
     return this.http.post(`/api/vehicles/${vehicleId}/photos`, formData
+    );
+  }
 
-    ).subscribe(res => { console.log(res) });
+
+  getPhotos(vehicleId) {
+
+
+    return this.http.get(`/api/vehicles/${vehicleId}/photos`);
   }
 }

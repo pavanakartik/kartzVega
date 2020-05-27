@@ -45,6 +45,7 @@
 
       <input type="file" (change)="uploadPhoto($event)" #fileInput>
 
+      <img *ngFor="let photo of photos" src="/uploads/{{photo.fileName}}" alt="" class="img-thumbnail">
 
 
 

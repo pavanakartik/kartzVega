@@ -4,7 +4,7 @@ import { Component, OnInit, ElementRef, ViewChild } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { VehicleService } from '../services/vehicle.service';
 import { PhotoService } from '../services/photo.service';
-import { FileUploader } from 'ng2-file-upload';
+
 
 
 @Component({
@@ -23,6 +23,7 @@ export class ViewVehicleComponent implements OnInit {
   vehicle: any;
   vehicleId: number;
   selectedFile: File = null;
+  photos: any;
 
   constructor(
     private route: ActivatedRoute,
@@ -41,6 +42,9 @@ export class ViewVehicleComponent implements OnInit {
   }
 
   ngOnInit() {
+
+    this.photoService.getPhotos(this.vehicleId).subscribe(photos => this.photos = photos);
+
     this.vehicleService.getVehicle(this.vehicleId)
       .subscribe(
         v => this.vehicle = v,
@@ -67,15 +71,11 @@ export class ViewVehicleComponent implements OnInit {
 
 
 
-    console.log(event)
+    console.log(event);
 
-    this.photoService.upload(this.vehicleId, this.selectedFile);
-    /*  var nativeElement: any = this.fileInput.nativeElement;
- 
-     console.log(nativeElement.files[0].name);
- 
-     this.photoService.upload(this.vehicleId, nativeElement.files)
-       .subscribe(x => console.log(x)); */
+    this.photoService.upload(this.vehicleId, this.selectedFile).subscribe(photo => { this.photos.push(photo) });
+    ;
+
   }
 }
 

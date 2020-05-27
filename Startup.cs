@@ -28,9 +28,11 @@ namespace vega {
             // or Singleton  a single instance of repository during Application LifecYCLE. 
             //Scoped- asingle instance of repository foreach request
 
-services.Configure<PhotoSettings>(Configuration.GetSection("PhotoSettings"));
+            services.Configure<PhotoSettings> (Configuration.GetSection ("PhotoSettings"));
 
-             services.AddScoped<IVehicleRepository, VehicleRepository>();
+            services.AddScoped<IVehicleRepository, VehicleRepository> ();
+
+            services.AddScoped<IPhotoRepository, PhotoRepository> ();
 
             services.AddScoped<IUnitOfWork, UnitOfWork> ();
 
