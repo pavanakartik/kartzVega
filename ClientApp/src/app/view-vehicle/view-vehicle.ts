@@ -1,9 +1,10 @@
 import { ToastyService } from 'ng2-toasty';
 
-import { Component, OnInit, ElementRef, ViewChild } from '@angular/core';
+import { Component, OnInit, ElementRef, ViewChild, ɵConsole } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { VehicleService } from '../services/vehicle.service';
 import { PhotoService } from '../services/photo.service';
+import { HttpEventType } from '@angular/common/http';
 
 
 
@@ -73,8 +74,40 @@ export class ViewVehicleComponent implements OnInit {
 
     console.log(event);
 
-    this.photoService.upload(this.vehicleId, this.selectedFile).subscribe(photo => { this.photos.push(photo) });
-    ;
+    this.photoService.upload(this.vehicleId, this.selectedFile).subscribe(
+
+      event => {
+
+        if (event.type === HttpEventType.UploadProgress) {
+
+          console.log('Upload progress: ' + Math.round((event.loaded / event.total) * 100) + "%");
+
+
+
+        }
+
+        else if (event.type === HttpEventType.Response) {
+
+          console.log(event);
+
+          this.photos.push(event.body);
+
+        }
+
+
+      }
+
+
+
+
+
+
+
+
+
+
+    );
+
 
   }
 }

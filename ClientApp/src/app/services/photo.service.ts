@@ -16,7 +16,7 @@ export class PhotoService {
 
     console.log(photo);
 
-    return this.http.post(`/api/vehicles/${vehicleId}/photos`, formData
+    return this.http.post(`/api/vehicles/${vehicleId}/photos`, formData, { reportProgress: true, observe: "events" }
     );
   }
 
