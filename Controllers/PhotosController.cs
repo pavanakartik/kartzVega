@@ -24,15 +24,25 @@ namespace vega.Controllers { //api/vehicles/1/photos
         private readonly PhotoSettings photoSettings;
         private readonly IMapper mapper;
         private readonly IPhotoRepository photoRepository;
-        public PhotosController (IWebHostEnvironment host, IVehicleRepository repository, IPhotoRepository photoRepository,
-            IUnitOfWork unitOfWork, IMapper mapper, IOptionsSnapshot<PhotoSettings> options) {
+
+        private readonly IPhotoService photoService;
+        public PhotosController (IWebHostEnvironment host,
+            IVehicleRepository repository,
+            IPhotoRepository photoRepository,
+
+            IMapper mapper,
+            IOptionsSnapshot<PhotoSettings> options,
+            IPhotoService photoService
+        ) {
             this.photoRepository = photoRepository;
 
             this.photoSettings = options.Value;
             this.mapper = mapper;
-            this.unitOfWork = unitOfWork;
+
             this.repository = repository;
             this.host = host;
+
+            this.photoService = photoService;
 
         }
 
@@ -47,28 +57,13 @@ namespace vega.Controllers { //api/vehicles/1/photos
 
             if (file == null) return BadRequest ("File Not Found");
             if (file.Length == 0) return BadRequest ("EmptyFile");
+
             if (file.Length > photoSettings.MaxBytes) return BadRequest ("Maximum File Size Exceeded");
 
             if (!photoSettings.IsSupported (file.FileName)) return BadRequest ("Invalid file name");
 
             var uploadsFolderPath = Path.Combine (host.WebRootPath, "uploads");
-            if (!Directory.Exists (uploadsFolderPath))
-                Directory.CreateDirectory (uploadsFolderPath);
-
-            var fileName = Guid.NewGuid ().ToString () + Path.GetExtension (file.FileName);
-
-            var filePath = Path.Combine (uploadsFolderPath, fileName);
-
-            using (var stream = new FileStream (filePath, FileMode.Create)) {
-                await file.CopyToAsync (stream);
-
-            }
-
-            var photo = new Photo { FileName = fileName };
-
-            vehicle.Photos.Add (photo);
-
-            await unitOfWork.CompleteAsync ();
+            var photo = await photoService.UploadPhoto (vehicle, file, uploadsFolderPath);
 
             return Ok (mapper.Map<Photo, PhotoResource> (photo));
 

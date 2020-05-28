@@ -1,5 +1,8 @@
-import { ProfileComponent } from './profile/profile.component';
-import { NavBarComponent } from './nav-bar/nav-bar.component';
+
+import { AuthService } from './services/auth.service';
+
+import { ChartModule } from 'angular2-chartjs';
+
 import { PhotoService } from './services/photo.service';
 import { ViewVehicleComponent } from './view-vehicle/view-vehicle';
 
@@ -24,7 +27,10 @@ import { HomeComponent } from './home/home.component';
 import { CounterComponent } from './counter/counter.component';
 import { FetchDataComponent } from './fetch-data/fetch-data.component';
 import { PaginationComponent } from './shared/pagination.component';
-import { AuthService } from './services/auth.service';
+
+import { ProfileComponent } from './profile/profile.component';
+import { AdminComponent } from './admin/admin.component';
+
 
 
 
@@ -34,26 +40,31 @@ import { AuthService } from './services/auth.service';
     NavMenuComponent,
     HomeComponent,
     CounterComponent,
-    FetchDataComponent, VehicleFormComponent, VehicleListComponent, PaginationComponent, ViewVehicleComponent, NavBarComponent, ProfileComponent
+    FetchDataComponent, VehicleFormComponent, VehicleListComponent, PaginationComponent, ViewVehicleComponent, ProfileComponent, AdminComponent
   ],
   imports: [
     BrowserModule.withServerTransition({ appId: 'ng-cli-universal' }),
-    HttpClientModule,
+    HttpClientModule, ChartModule,
     FormsModule, FileUploadModule,
     ToastyModule.forRoot(),
     RouterModule.forRoot([
-
-      { path: '', redirectTo: 'vehicles', pathMatch: 'full' },
       {
         path: 'profile',
         component: ProfileComponent
       },
+
+      { path: '', redirectTo: 'vehicles', pathMatch: 'full' },
+
+
       { path: 'vehicles/new', component: VehicleFormComponent },
       { path: 'vehicles/edit/:id', component: VehicleFormComponent },
       { path: 'vehicles/:id', component: ViewVehicleComponent },
       { path: 'vehicles', component: VehicleListComponent },
       { path: 'home', component: HomeComponent },
+      { path: 'admin', component: AdminComponent },
+
       { path: 'counter', component: CounterComponent },
+
       { path: 'fetch-data', component: FetchDataComponent },
       { path: '**', redirectTo: 'home' }
     ])
