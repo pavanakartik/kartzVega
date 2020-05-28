@@ -4,7 +4,6 @@ import { AuthService } from './services/auth.service';
 import { ChartModule } from 'angular2-chartjs';
 
 import { PhotoService } from './services/photo.service';
-import { ViewVehicleComponent } from './view-vehicle/view-vehicle';
 
 import { VehicleListComponent } from './vehicle-list/vehicle-list.component';
 import { AppErrorHandler } from './app.error-handler';
@@ -30,6 +29,7 @@ import { PaginationComponent } from './shared/pagination.component';
 
 import { ProfileComponent } from './profile/profile.component';
 import { AdminComponent } from './admin/admin.component';
+import { ViewVehicleComponent } from './view-vehicle/view-vehicle';
 
 
 
