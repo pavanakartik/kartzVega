@@ -1,60 +1,68 @@
-<h1>Vehicle</h1>
+<div>
+  <h1 class="text-success">Vehicle</h1>
+
+
+
+</div>
+
+
 <div>
 
   <!-- Nav tabs -->
   <ul class="nav nav-tabs" role="tablist">
-    <li role="presentation" class="active" class="nav-item">
-      <a aria-controls="basic" role="tab" data-toggle="tab" class="nav-link active" href="#basic">Vehicle</a>
-    </li>
-    <li role="presentation" class="nav-item">
-      <a aria-controls="photos" role="tab" data-toggle="tab" class="nav-link active" href="#photos">Photos</a>
-    </li>
+    <li role="presentation" class="active"><a href="#basic" aria-controls="basic" role="tab" class="nav-link"
+        data-toggle="tab">Vehicle</a></li>
+    <li role="presentation"><a href="#photos" aria-controls="photos" role="tab" class="nav-link"
+        data-toggle="tab">Photos</a></li>
   </ul>
 
   <!-- Tab panes -->
   <div class="tab-content" *ngIf="vehicle">
     <!-- Vehicle tab -->
     <div role="tabpanel" class="tab-pane active" id="basic">
-      <h2>Basics</h2>
+      <h2 class="text-info">Basics</h2>
       <ul>
-        <li>Make: {{ vehicle.make.name }}</li>
-        <li>Model: {{ vehicle.model.name }}</li>
-        <li>Registered: {{ vehicle.isRegistered ? 'Yes' : 'No' }}
+        <li class="text-secondary">Make: {{ vehicle.make.name }}</li>
+        <li class="text-secondary">Model: {{ vehicle.model.name }}</li>
+        <li class="text-secondary">Registered: {{ vehicle.isRegistered ? 'Yes' : 'No' }}
       </ul>
-      <h2>Features</h2>
+      <h2 class="text-info">Features</h2>
       <ul>
-        <li *ngFor="let f of vehicle.features">{{ f.name }}</li>
+        <li class="text-secondary" *ngFor="let f of vehicle.features">{{ f.name }}</li>
       </ul>
-      <h2>Contact</h2>
+      <h2 class="text-info">Contact</h2>
       <ul>
-        <li>Contact Name: {{ vehicle.contact.name }}</li>
-        <li>Contact Phone: {{ vehicle.contact.phone }}</li>
-        <li>Contact Email: {{ vehicle.contact.email }}</li>
+        <li class="text-secondary">Contact Name: {{ vehicle.contact.name }}</li>
+        <li class="text-secondary">Contact Phone: {{ vehicle.contact.phone }}</li>
+        <li class="text-secondary">Contact Email: {{ vehicle.contact.email }}</li>
       </ul>
       <br />
-      <p>
-        <a class="btn btn-primary" [routerLink]="['/vehicles/edit/', vehicle.id]">Edit</a>
-        <button class="btn btn-danger" (click)="delete()">Delete</button>
-        <a class="btn btn-default" [routerLink]="['/vehicles']">View All Vehicles</a>
-      </p>
+
+      <div class="btn-group">
+
+
+        <button type="button" class="btn btn-primary" style="margin-right:30px;"
+          [routerLink]="['/vehicles/edit/', vehicle.id]">Edit</button>
+
+
+
+        <button type="button" class="btn btn-danger" style="margin-right:30px;" (click)="delete()">Delete</button>
+
+        <button type="button" class="btn btn-primary" [routerLink]="['/vehicles']">View All Vehicles</button>
+      </div>
+
+
+
     </div>
     <!-- Photos tab -->
-    <div role="tabpanel" class="tab-pane active" id="photos">
+    <div role="tabpanel" class="tab-pane" id="photos">
       <h2>Photos</h2>
-      <p>Hey Buddy</p>
-
       <input type="file" (change)="uploadPhoto($event)" #fileInput>
-
-      <div class="progress" *ngIf="progress > 0">
+      <div class="progress" *ngIf="progress >0">
         <div class="progress-bar progress-bar-striped bg-success" role="progressbar" [style.width.%]="progress">
         </div>
-      
-      </div> 
-
-      <img *ngFor="let photo of photos" src="/uploads/{{photo.fileName}}" alt="" class="img-thumbnail">
-
-
-
+      </div>
+      <img *ngFor="let photo of photos" src="/uploads/{{ photo.fileName }}" class="img-thumbnail">
     </div>
   </div>
 </div>
